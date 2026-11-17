@@ -1,11 +1,19 @@
+
 import { describe, test, expect } from "vitest";
-import { createPizza, orderPizza, sendOrder } from "./pizzashop";
+import {
+  createPizza,
+  sendOrder,
+  orderPizza,
+} from "./pizzashop";
 
 describe("Pizza Shop Unit Tests", () => {
   test("createPizza returns correct type and price", () => {
     const pizza = createPizza("margherita");
 
-    expect(pizza).toEqual({ type: "margherita", price: 100 });
+    expect(pizza).toEqual({
+      type: "margherita",
+      price: 100,
+    });
   });
 
   test("createPizza throws for unknown type", () => {
@@ -13,7 +21,10 @@ describe("Pizza Shop Unit Tests", () => {
   });
 
   test("sendOrder returns a numeric order id", () => {
-    const id = sendOrder({ type: "pepperoni", price: 120 });
+    const id = sendOrder({
+      type: "pepperoni",
+      price: 120,
+    });
 
     expect(typeof id).toBe("number");
     expect(Number.isInteger(id)).toBe(true);
@@ -25,5 +36,14 @@ describe("Pizza Shop Unit Tests", () => {
     const result = orderPizza("pepperoni");
 
     expect(result).toBe(true);
+  });
+
+  test("createPizza returns vegetarian pizza for 110 SEK", () => {
+    const pizza = createPizza("vegetarian");
+
+    expect(pizza).toEqual({
+      type: "vegetarian",
+      price: 110,
+    });
   });
 });
