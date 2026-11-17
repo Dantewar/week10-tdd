@@ -1,5 +1,6 @@
 
 import { describe, test, expect } from "vitest";
+
 import { borrowBook } from "./library";
 
 describe("Library Integration Tests - borrowBook", () => {
@@ -10,7 +11,7 @@ describe("Library Integration Tests - borrowBook", () => {
     expect(loan.memberId).toBe(7);
   });
 
-  test("generates a loan ID between 1000 and 9999", () => {
+  test("generates a valid loan ID", () => {
     const loan = borrowBook("dune", 7);
 
     expect(typeof loan.loanId).toBe("number");

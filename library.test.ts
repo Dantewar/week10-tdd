@@ -7,6 +7,7 @@ import {
   registerLoan,
 } from "./library";
 
+// Exercise 4 - findBook
 describe("Library Unit Tests - findBook", () => {
   test("findBook returns dune with 3 copies", () => {
     const book = findBook("dune");
@@ -35,6 +36,7 @@ describe("Library Unit Tests - findBook", () => {
   });
 });
 
+// Exercise 5 - checkOutBook
 describe("Library Unit Tests - checkOutBook", () => {
   const availableBook = {
     title: "dune",
@@ -78,6 +80,7 @@ describe("Library Unit Tests - checkOutBook", () => {
   });
 });
 
+// Exercise 6 - registerLoan
 describe("Library Unit Tests - registerLoan", () => {
   test("registerLoan returns a valid loan", () => {
     const loan = registerLoan(1234, "dune", 7);
@@ -95,7 +98,7 @@ describe("Library Unit Tests - registerLoan", () => {
     ).toThrow();
   });
 
-  test("registerLoan throws for an unknown title", () => {
+  test("registerLoan throws for an invalid book title", () => {
     expect(() =>
       registerLoan(1234, "harry potter", 7)
     ).toThrow();
