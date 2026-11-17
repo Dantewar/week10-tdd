@@ -1,23 +1,29 @@
 
 import { z } from "zod";
 
-// Book title schema
+// Book schemas
 export const BookTitleSchema = z.enum([
   "dune",
   "neuromancer",
   "foundation",
 ]);
 
-// Book schema
 export const BookSchema = z.object({
   title: BookTitleSchema,
   copiesAvailable: z.number().int().nonnegative(),
 });
 
+// Loan schema
+export const LoanSchema = z.object({
+  loanId: z.number().int().positive(),
+  title: BookTitleSchema,
+  memberId: z.number().int().positive(),
+});
+
 // TypeScript types
 export type BookTitle = z.infer<typeof BookTitleSchema>;
-
 export type Book = z.infer<typeof BookSchema>;
+export type Loan = z.infer<typeof LoanSchema>;
 
 // Library catalogue
 const catalogue: Record<BookTitle, Book> = {
@@ -37,7 +43,7 @@ const catalogue: Record<BookTitle, Book> = {
   },
 };
 
-// Find a book in the catalogue
+// Find a book
 export const findBook = (title: unknown): Book => {
   const validTitle = BookTitleSchema.parse(title);
 
@@ -46,18 +52,46 @@ export const findBook = (title: unknown): Book => {
   return BookSchema.parse(book);
 };
 
-// Check out a book and generate a loan ID
+// Check out a book
 export const checkOutBook = (book: unknown): number => {
-  // Validate book using Zod
   const validBook = BookSchema.parse(book);
 
-  // Check book availability
   if (validBook.copiesAvailable === 0) {
     throw new Error("No copies available");
   }
 
-  // Generate random loan ID from 1000 to 9999
   const loanId = Math.floor(Math.random() * 9000) + 1000;
 
   return loanId;
+};
+
+// Register a loan
+export const registerLoan = (
+  loanId: unknown,
+  title: unknown,
+  memberId: unknown
+): Loan => {
+  return LoanSchema.parse({
+    loanId,
+    title,
+    memberId,
+  });
+};
+
+// Borrow a book using the complete workflow
+export const borrowBook = (
+  title: unknown,
+  memberId: unknown
+): Loan => {
+  const book = findBook(title);
+
+  const loanId = checkOutBook(book);
+
+  const loan = registerLoan(
+    loanId,
+    book.title,
+    memberId
+  );
+
+  return loan;
 };
