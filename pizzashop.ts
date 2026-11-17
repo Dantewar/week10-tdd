@@ -24,7 +24,7 @@ export const OrderIdSchema = z.number().int().nonnegative();
 
 export const AmountSchema = z.number().positive();
 
-// TypeScript types
+// TypeScript types inferred from Zod
 export type PizzaType = z.infer<typeof PizzaTypeSchema>;
 export type Pizza = z.infer<typeof PizzaSchema>;
 
@@ -58,7 +58,7 @@ const chargeCustomer = (
 ): boolean => {
   if (orderId === undefined || orderId === null) {
     throw new Error(
-      "Cannot charge the cutomer without a valid order ID!"
+      "Cannot charge the customer without a valid order ID!"
     );
   }
 
