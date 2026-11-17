@@ -51,3 +51,20 @@ is not always enough.
 Testing the exact error message helps ensure that
 the application provides clear and consistent
 information when something goes wrong.
+
+## Exercise 3 – Testing the Schemas Themselves
+
+### Question
+Why use toEqual and not toBe when comparing objects?
+
+We use toEqual because it compares the properties
+and values inside objects.
+
+The toBe matcher checks whether two variables
+refer to exactly the same object in memory.
+
+Two objects can contain identical data but still
+be different objects in memory.
+
+Therefore, toEqual is the correct matcher when
+comparing the contents of pizza objects.
