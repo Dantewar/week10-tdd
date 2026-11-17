@@ -14,7 +14,7 @@ still failed because the menu did not contain
 a price for the new pizza.
 
 TypeScript checks types during development,
-while Zod checks actual values at runtime.
+while Zod validates actual values at runtime.
 
 This explains why Vitest could run the code even
 when TypeScript showed an error.
@@ -68,3 +68,44 @@ be different objects in memory.
 
 Therefore, toEqual is the correct matcher when
 comparing the contents of pizza objects.
+
+## Exercise 5 – Testing checkOutBook
+
+### Question
+Could the random number test pass by luck
+even if the code were wrong?
+
+Yes. The test could pass by luck because Math.random()
+produces different values each time.
+
+A function might sometimes return a valid number
+even if its implementation is incorrect.
+
+To make the test more trustworthy, I could mock
+Math.random() using vi.spyOn() in Vitest.
+
+This would allow me to test specific values,
+including the lowest and highest possible loan IDs.
+
+## Exercise 6 – registerLoan and borrowBook
+
+### Question
+What does the foundation test show about errors
+travelling through a chain of functions?
+
+The borrowBook function calls findBook,
+checkOutBook and registerLoan.
+
+When borrowing "foundation", findBook successfully
+returns the book even though no copies are available.
+
+The checkOutBook function then throws the error
+"No copies available".
+
+Because borrowBook does not catch this error,
+it travels back through the function chain
+to the caller.
+
+This shows that an error inside one function
+can stop the complete operation and be reported
+by the function that called it.
