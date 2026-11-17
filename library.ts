@@ -39,12 +39,25 @@ const catalogue: Record<BookTitle, Book> = {
 
 // Find a book in the catalogue
 export const findBook = (title: unknown): Book => {
-  // Validate the input
   const validTitle = BookTitleSchema.parse(title);
 
-  // Find the book
   const book = catalogue[validTitle];
 
-  // Validate and return the book
   return BookSchema.parse(book);
+};
+
+// Check out a book and generate a loan ID
+export const checkOutBook = (book: unknown): number => {
+  // Validate book using Zod
+  const validBook = BookSchema.parse(book);
+
+  // Check book availability
+  if (validBook.copiesAvailable === 0) {
+    throw new Error("No copies available");
+  }
+
+  // Generate random loan ID from 1000 to 9999
+  const loanId = Math.floor(Math.random() * 9000) + 1000;
+
+  return loanId;
 };
